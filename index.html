@@ -77,6 +77,7 @@ label {
         // Send AJAX request
         var xhr = new XMLHttpRequest();
         xhr.open('GET', 'https://5ee2-34-125-124-35.ngrok-free.app/?query=' + searchTerm, true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.onreadystatechange = function() {
             if (xhr.readyState == 4 && xhr.status == 200) {
                 var response = xhr.responseText;
