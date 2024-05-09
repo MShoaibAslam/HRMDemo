@@ -1,97 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Demo Search</title>
-<style>
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo Search</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
 
-header {
-    background-color: #333;
-    color: #fff;
-    padding: 10px;
-    text-align: center;
-}
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
 
-.container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 20px; /* Add margin for spacing */
-}
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+            /* Add margin for spacing */
+        }
 
-input[type="text"] {
-    padding: 10px;
-    width: 70%;
-    margin-bottom: 10px; /* Add margin for spacing */
-    border: 1px solid #ccc; /* Add border */
-}
+        input[type="text"] {
+            padding: 10px;
+            width: 70%;
+            margin-bottom: 10px;
+            /* Add margin for spacing */
+            border: 1px solid #ccc;
+            /* Add border */
+        }
 
-button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-}
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
 
-label {
-    display: block;
-    margin-top: 20px;
-}
+        label {
+            display: block;
+            margin-top: 20px;
+        }
 
-#resultLabel {
-    height: 200px; /* Set a fixed height */
-    width: 1200px;
-    overflow-y: auto; /* Add vertical scroll */
-    border: 1px solid #ccc; /* Add border for clarity */
-    padding: 10px; /* Add padding for better spacing */
-    margin-bottom: 20px; /* Add margin for spacing */
-}
-
-</style>
+        #resultLabel {
+            height: 200px;
+            /* Set a fixed height */
+            width: 1200px;
+            overflow-y: auto;
+            /* Add vertical scroll */
+            border: 1px solid #ccc;
+            /* Add border for clarity */
+            padding: 10px;
+            /* Add padding for better spacing */
+            margin-bottom: 20px;
+            /* Add margin for spacing */
+        }
+    </style>
 </head>
+
 <body>
 
-<header>
-    <h1>HRMS Demo Search</h1>
-</header>
+    <header>
+        <h1>HRMS Demo Search</h1>
+    </header>
 
-<div class="container">
-    <label id="resultLabel"></label>
-    <input type="text" id="searchInput" placeholder="Enter search term">
-    <button id="searchButton">Search</button>
-</div>
+    <div class="container">
+        <label id="resultLabel"></label>
+        <input type="text" id="searchInput" placeholder="Enter search term">
+        <button id="searchButton">Search</button>
+    </div>
 
-<script>
-    document.getElementById('searchButton').addEventListener('click', function() {
-        var searchTerm = document.getElementById('searchInput').value;
-        var startTime = performance.now();
-        
-        // Send AJAX request
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', 'https://3b5b-34-125-124-35.ngrok-free.app/?query=' + searchTerm, true);
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                var response = xhr.responseText;
-                var endTime = performance.now();
-                var timeTaken = ((endTime - startTime) / 1000).toFixed(2); // Convert milliseconds to seconds
-                
-                document.getElementById('resultLabel').innerText = response;
-                document.getElementById('resultLabel').innerText += "\nTime taken: " + timeTaken + " seconds";
-            }
-        };
-        xhr.send();
-    });
-  </script>
+    <script>
+        document.getElementById('searchButton').addEventListener('click', function () {
+            var searchTerm = document.getElementById('searchInput').value;
+            var startTime = performance.now();
+
+            // Send AJAX request
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'https://ed1d-34-125-124-35.ngrok-free.app/?query=' + searchTerm, true);
+            xhr.setRequestHeader('ngrok-skip-browser-warning', '69420'); // Add the ngrok-skip-browser-warning header
+            xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    var response = xhr.responseText;
+                    var endTime = performance.now();
+                    var timeTaken = ((endTime - startTime) / 1000).toFixed(2); // Convert milliseconds to seconds
+
+                    document.getElementById('resultLabel').innerText = response;
+                    document.getElementById('resultLabel').innerText += "\nTime taken: " + timeTaken + " seconds";
+                }
+            };
+            console.log(xhr);
+            xhr.send();
+
+        });
+    </script>
 
 
 </body>
+
 </html>
