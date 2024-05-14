@@ -85,7 +85,7 @@
 
             // Send AJAX request
             var xhr = new XMLHttpRequest();
-            xhr.open('GET', 'https://ed1d-34-125-124-35.ngrok-free.app/?query=' + searchTerm, true);
+            xhr.open('GET', 'http://34.30.11.161:5000/?query=' + searchTerm, true);
             xhr.setRequestHeader('ngrok-skip-browser-warning', '69420'); // Add the ngrok-skip-browser-warning header
             xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
             xhr.onreadystatechange = function () {
