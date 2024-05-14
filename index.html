@@ -87,7 +87,6 @@
             var xhr = new XMLHttpRequest();
             xhr.open('GET', 'http://34.30.11.161:5000/?query=' + searchTerm, true);
             xhr.setRequestHeader('ngrok-skip-browser-warning', '69420'); // Add the ngrok-skip-browser-warning header
-            xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
             xhr.onreadystatechange = function () {
                 if (xhr.readyState == 4 && xhr.status == 200) {
                     var response = xhr.responseText;
