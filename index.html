@@ -36,7 +36,7 @@
 
         input[type="text"] {
             padding: 10px;
-            width: 800px; /* Set the width to 800px */
+            width: 800px;
             margin-bottom: 10px;
             border: 1px solid #ccc;
         }
@@ -46,9 +46,9 @@
             background-color: #007bff;
             color: #fff;
             border: none;
-            border-radius: 8px; /* Added border-radius */
+            border-radius: 8px;
             cursor: pointer;
-            margin-top: 10px; /* Added margin-top to separate the button from the input */
+            margin-top: 10px;
         }
 
         label {
@@ -106,16 +106,16 @@
 
     <div class="card-container">
         <div class="card">
-            <h2>Attendance</h2>
-            <canvas id="attendanceChart"></canvas>
+            <h2>Age Distribution</h2>
+            <canvas id="ageChart"></canvas>
         </div>
         <div class="card">
-            <h2>Salary</h2>
+            <h2>Salary Distribution</h2>
             <canvas id="salaryChart"></canvas>
         </div>
         <div class="card">
-            <h2>Leaves</h2>
-            <canvas id="leavesChart"></canvas>
+            <h2>Gender Distribution</h2>
+            <canvas id="genderChart"></canvas>
         </div>
     </div>
 
@@ -123,7 +123,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
-        var attendanceChart, salaryChart, leavesChart;
+        var ageChart, salaryChart, genderChart;
 
         document.getElementById('searchForm').addEventListener('submit', function (event) {
             event.preventDefault();
@@ -153,50 +153,79 @@
         });
 
         function createCharts(data) {
-            var labels = data.map(function(item) {
-                return item.first_name;
-            });
-            var attendanceData = data.map(function(item) {
-                return item.attendance;
-            });
-            var salaryData = data.map(function(item) {
-                return item.salary;
-            });
-            var leavesData = data.map(function(item) {
-                return item.leaves;
-            });
+            // Extracting data for charts
+            var labels = data.map(item => item.EmployeeName);
+            var ages = data.map(item => item.Age);
+            var salaries = data.map(item => item.LDSalary);
+            var genders = data.map(item => item.Gender);
 
             // Destroy existing charts if they exist
-            if (attendanceChart) attendanceChart.destroy();
+            if (ageChart) ageChart.destroy();
             if (salaryChart) salaryChart.destroy();
-            if (leavesChart) leavesChart.destroy();
+            if (genderChart) genderChart.destroy();
 
-            attendanceChart = createChart('attendanceChart', 'bar', 'Attendance', labels, attendanceData, 'rgba(75, 192, 192, 0.2)', 'rgba(75, 192, 192, 1)');
-            salaryChart = createChart('salaryChart', 'line', 'Salary', labels, salaryData, 'rgba(153, 102, 255, 0.2)', 'rgba(153, 102, 255, 1)');
-            leavesChart = createChart('leavesChart', 'pie', 'Leaves', labels, leavesData, null, null);
-        }
-
-        function createChart(chartId, type, label, labels, data, bgColor, borderColor) {
-            var ctx = document.getElementById(chartId).getContext('2d');
-            return new Chart(ctx, {
-                type: type, // Set the chart type
+            // Age Distribution Chart
+            var ageCtx = document.getElementById('ageChart').getContext('2d');
+            ageChart = new Chart(ageCtx, {
+                type: 'bar',
                 data: {
                     labels: labels,
                     datasets: [{
-                        label: label,
-                        data: data,
-                        backgroundColor: bgColor,
-                        borderColor: borderColor,
+                        label: 'Age Distribution',
+                        data: ages,
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
                         borderWidth: 1
                     }]
                 },
                 options: {
                     responsive: true,
                     scales: {
-                        y: {
-                            beginAtZero: true
-                        }
+                        y: { beginAtZero: true }
                     }
+                }
+            });
+
+            // Salary Distribution Chart
+            var salaryCtx = document.getElementById('salaryChart').getContext('2d');
+            salaryChart = new Chart(salaryCtx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Salary Distribution',
+                        data: salaries,
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: { beginAtZero: true }
+                    }
+                }
+            });
+
+            // Gender Distribution Chart
+            var genderCtx = document.getElementById('genderChart').getContext('2d');
+            var genderLabels = Array.from(new Set(genders));
+            var genderData = genderLabels.map(label => genders.filter(gender => gender === label).length);
+            genderChart = new Chart(genderCtx, {
+                type: 'pie',
+                data: {
+                    labels: genderLabels,
+                    datasets: [{
+                        label: 'Gender Distribution',
+                        data: genderData,
+                        backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)'],
+                        borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true
                 }
             });
         }
